@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Surprise 🎂</title>
+
+<style>
+body{
+  margin:0;
+  font-family:sans-serif;
+  background:black;
+  color:white;
+  overflow:hidden;
+}
+
+/* Screens */
+.screen{
+  display:none;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  height:100vh;
+}
+.active{display:flex}
+
+/* PIN */
+input{
+  padding:10px;
+  font-size:20px;
+  border-radius:10px;
+  border:none;
+  text-align:center;
+}
+button{
+  padding:12px 20px;
+  margin-top:10px;
+  border:none;
+  border-radius:10px;
+  background:purple;
+  color:white;
+}
+
+/* Shake */
+@keyframes shake{
+  0%{transform:translateX(0)}
+  25%{transform:translateX(-5px)}
+  50%{transform:translateX(5px)}
+  75%{transform:translateX(-5px)}
+  100%{transform:translateX(0)}
+}
+.shake{animation:shake 0.3s}
+
+/* Happy text */
+.hbd{
+  font-size:30px;
+  color:pink;
+  text-shadow:0 0 15px pink;
+}
+
+/* Slideshow */
+#slideshow{
+  width:90%;
+  max-width:350px;
+  height:60vh;
+  background:#111;
+  border-radius:20px;
+  overflow:hidden;
+}
+#slideshow img, #slideshow video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.fade{animation:fade 1s}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+
+/* Gift */
+.box{
+  width:90px;
+  height:90px;
+  background:purple;
+  margin:10px;
+  position:relative;
+}
+.box::before{
+  content:'';
+  position:absolute;
+  width:100%;
+  height:10px;
+  background:white;
+  top:40px;
+}
+
+/* Fade gift */
+.fadeIn{animation:fadeIn 0.8s}
+@keyframes fadeIn{
+  from{opacity:0; transform:scale(0.9)}
+  to{opacity:1; transform:scale(1)}
+}
+
+/* Popup */
+#popup{
+  position:absolute;
+  background:red;
+  padding:20px;
+  border-radius:50%;
+  display:none;
+}
+
+/* Hearts */
+.heart{
+  position:absolute;
+  animation:float 3s linear infinite;
+}
+@keyframes float{
+  from{transform:translateY(100vh)}
+  to{transform:translateY(-10vh)}
+}
+
+/* Teddy */
+#teddy{
+  position:absolute;
+  bottom:-200px;
+  left:50%;
+  transform:translateX(-50%);
+  text-align:center;
+}
+#teddy img{
+  width:130px;
+}
+.teddyShow{
+  animation:teddyUp 1.5s forwards;
+}
+@keyframes teddyUp{
+  from{bottom:-200px; opacity:0}
+  to{bottom:20px; opacity:1}
+}
+#missText{
+  color:pink;
+  margin-top:5px;
+  display:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- PIN -->
+<div id="pinScreen" class="screen active">
+  <h2>Enter PIN 🔐</h2>
+  <input type="password" id="pin">
+  <button onclick="checkPin()">Enter</button>
+</div>
+
+<!-- GIF -->
+<div id="gifScreen" class="screen">
+  <div class="hbd">🎉 Happy Birthday 🎉</div>
+  <img id="gifImage" src="gif1.gif" width="220" onclick="nextGif()">
+  <p>Tap cake 🎂</p>
+</div>
+
+<!-- SLIDESHOW -->
+<div id="slideScreen" class="screen">
+  <div id="slideshow"></div>
+</div>
+
+<!-- GIFTS -->
+<div id="giftScreen" class="screen">
+  <div style="display:flex">
+    <div class="box" onclick="openGift(1)"></div>
+    <div class="box" onclick="openGift(2)"></div>
+    <div class="box" onclick="openGift(3)"></div>
+  </div>
+</div>
+
+<!-- GIFT CONTENT -->
+<div id="giftContent" class="screen">
+  <div id="giftData"></div>
+  <button onclick="backToGifts()">Back</button>
+  <button onclick="nextPage()">Next</button>
+</div>
+
+<!-- LETTER -->
+<div id="letterScreen" class="screen">
+  <p id="letterText"></p>
+  <button onclick="showPopup()">Pop Up</button>
+</div>
+
+<!-- POPUP -->
+<div id="popup">I Love You ❤️</div>
+
+<!-- TEDDY -->
+<div id="teddy">
+  <img src="teddy.gif">
+  <div id="missText">I miss you 💖</div>
+</div>
+
+<script>
+
+// PIN
+function checkPin(){
+  let pinInput=document.getElementById("pin");
+  if(pinInput.value=="1234"){
+    changeScreen("gifScreen");
+  }else{
+    pinInput.classList.add("shake");
+    setTimeout(()=>pinInput.classList.remove("shake"),300);
+
+    if(navigator.vibrate){
+      navigator.vibrate([200,100,200]);
+    }
+  }
+}
+
+// SCREEN
+function changeScreen(id){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+// GIF
+let gifs=["gif1.gif","gif2.gif","gif3.gif"];
+let gifIndex=0;
+
+function nextGif(){
+  gifIndex++;
+  if(gifIndex<gifs.length){
+    document.getElementById("gifImage").src=gifs[gifIndex];
+  }else{
+    startSlideshow();
+  }
+}
+
+// SLIDES
+let slides=[
+  {type:"img",src:"1.jpg"},
+  {type:"img",src:"2.jpg"},
+  {type:"video",src:"v1.mp4"},
+  {type:"img",src:"3.jpg"},
+  {type:"video",src:"v2.mp4"},
+  {type:"img",src:"4.jpg"}
+];
+
+function startSlideshow(){
+  changeScreen("slideScreen");
+  let i=0;
+
+  function show(){
+    let s=slides[i];
+    let c=document.getElementById("slideshow");
+
+    if(s.type=="img"){
+      c.innerHTML=`<img class="fade" src="${s.src}">`;
+      setTimeout(next,1500);
+    }else{
+      c.innerHTML=`<video class="fade" src="${s.src}" autoplay></video>`;
+      c.querySelector("video").onended=next;
+    }
+  }
+
+  function next(){
+    i++;
+    if(i<slides.length) show();
+    else changeScreen("giftScreen");
+  }
+
+  show();
+}
+
+// GIFTS
+function openGift(n){
+  changeScreen("giftContent");
+  let d=document.getElementById("giftData");
+
+  if(n==1) d.innerHTML="<img class='fadeIn' src='g1.jpg'>";
+  if(n==2) d.innerHTML="<video class='fadeIn' src='g2.mp4' controls></video>";
+  if(n==3) d.innerHTML="<img class='fadeIn' src='g3.jpg'>";
+}
+
+function backToGifts(){
+  changeScreen("giftScreen");
+}
+
+function nextPage(){
+  changeScreen("letterScreen");
+  typeText();
+}
+
+// LETTER
+function typeText(){
+  let text="Happy Birthday ❤️ You are my everything...";
+  let i=0;
+  let el=document.getElementById("letterText");
+
+  let int=setInterval(()=>{
+    el.innerHTML+=text[i];
+    i++;
+    if(i>=text.length) clearInterval(int);
+  },50);
+}
+
+// POPUP + TEDDY
+function showPopup(){
+  let p=document.getElementById("popup");
+  p.style.display="block";
+  p.style.top="40%";
+  p.style.left="50%";
+  p.style.transform="translateX(-50%)";
+
+  // hearts
+  for(let i=0;i<20;i++){
+    let h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"%";
+    document.body.appendChild(h);
+  }
+
+  // teddy after 1 sec
+  setTimeout(()=>{
+    document.getElementById("teddy").classList.add("teddyShow");
+    document.getElementById("missText").style.display="block";
+  },1000);
+}
+
+</script>
+
+</body>
+</html>
