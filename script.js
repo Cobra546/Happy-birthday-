@@ -282,12 +282,12 @@ const slides = [
 },
 
 {
-    type:"image",
+    type:"Snapchat-374458413.jpg",
     src:"assets/slide11.jpg"
 },
 
 {
-    type:"image",
+    type:"Snapchat-497018224.jpg",
     src:"assets/slide12.jpg"
 }
 
