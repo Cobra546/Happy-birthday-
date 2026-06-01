@@ -1,331 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Birthday Surprise 🎂</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Keenoo ❤️</title>
 
-<style>
-body{
-  margin:0;
-  font-family:sans-serif;
-  background:black;
-  color:white;
-  overflow:hidden;
-}
-
-/* Screens */
-.screen{
-  display:none;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-  height:100vh;
-}
-.active{display:flex}
-
-/* PIN */
-input{
-  padding:10px;
-  font-size:20px;
-  border-radius:10px;
-  border:none;
-  text-align:center;
-}
-button{
-  padding:12px 20px;
-  margin-top:10px;
-  border:none;
-  border-radius:10px;
-  background:purple;
-  color:white;
-}
-
-/* Shake */
-@keyframes shake{
-  0%{transform:translateX(0)}
-  25%{transform:translateX(-5px)}
-  50%{transform:translateX(5px)}
-  75%{transform:translateX(-5px)}
-  100%{transform:translateX(0)}
-}
-.shake{animation:shake 0.3s}
-
-/* Happy text */
-.hbd{
-  font-size:30px;
-  color:pink;
-  text-shadow:0 0 15px pink;
-}
-
-/* Slideshow */
-#slideshow{
-  width:90%;
-  max-width:350px;
-  height:60vh;
-  background:#111;
-  border-radius:20px;
-  overflow:hidden;
-}
-#slideshow img, #slideshow video{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-.fade{animation:fade 1s}
-@keyframes fade{from{opacity:0}to{opacity:1}}
-
-/* Gift */
-.box{
-  width:90px;
-  height:90px;
-  background:purple;
-  margin:10px;
-  position:relative;
-}
-.box::before{
-  content:'';
-  position:absolute;
-  width:100%;
-  height:10px;
-  background:white;
-  top:40px;
-}
-
-/* Fade gift */
-.fadeIn{animation:fadeIn 0.8s}
-@keyframes fadeIn{
-  from{opacity:0; transform:scale(0.9)}
-  to{opacity:1; transform:scale(1)}
-}
-
-/* Popup */
-#popup{
-  position:absolute;
-  background:red;
-  padding:20px;
-  border-radius:50%;
-  display:none;
-}
-
-/* Hearts */
-.heart{
-  position:absolute;
-  animation:float 3s linear infinite;
-}
-@keyframes float{
-  from{transform:translateY(100vh)}
-  to{transform:translateY(-10vh)}
-}
-
-/* Teddy */
-#teddy{
-  position:absolute;
-  bottom:-200px;
-  left:50%;
-  transform:translateX(-50%);
-  text-align:center;
-}
-#teddy img{
-  width:130px;
-}
-.teddyShow{
-  animation:teddyUp 1.5s forwards;
-}
-@keyframes teddyUp{
-  from{bottom:-200px; opacity:0}
-  to{bottom:20px; opacity:1}
-}
-#missText{
-  color:pink;
-  margin-top:5px;
-  display:none;
-}
-
-</style>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<!-- PIN -->
-<div id="pinScreen" class="screen active">
-  <h2>Enter PIN 🔐</h2>
-  <input type="password" id="pin">
-  <button onclick="checkPin()">Enter</button>
-</div>
+<!-- Floating Hearts Background -->
+<div id="floatingHearts"></div>
 
-<!-- GIF -->
-<div id="gifScreen" class="screen">
-  <div class="hbd">🎉 Happy Birthday 🎉</div>
-  <img id="gifImage" src="gif1.gif" width="220" onclick="nextGif()">
-  <p>Tap cake 🎂</p>
-</div>
+<!-- ========================= -->
+<!-- PIN SCREEN -->
+<!-- ========================= -->
+<section id="pinScreen" class="screen active">
 
-<!-- SLIDESHOW -->
-<div id="slideScreen" class="screen">
-  <div id="slideshow"></div>
-</div>
+    <div class="glass-card">
 
-<!-- GIFTS -->
-<div id="giftScreen" class="screen">
-  <div style="display:flex">
-    <div class="box" onclick="openGift(1)"></div>
-    <div class="box" onclick="openGift(2)"></div>
-    <div class="box" onclick="openGift(3)"></div>
-  </div>
-</div>
+        <div class="lock-icon">🔒</div>
 
-<!-- GIFT CONTENT -->
-<div id="giftContent" class="screen">
-  <div id="giftData"></div>
-  <button onclick="backToGifts()">Back</button>
-  <button onclick="nextPage()">Next</button>
-</div>
+        <h2>Enter Secret PIN</h2>
 
-<!-- LETTER -->
-<div id="letterScreen" class="screen">
-  <p id="letterText"></p>
-  <button onclick="showPopup()">Pop Up</button>
-</div>
+        <div class="pin-dots">
+            <span id="dot1"></span>
+            <span id="dot2"></span>
+            <span id="dot3"></span>
+            <span id="dot4"></span>
+        </div>
 
-<!-- POPUP -->
-<div id="popup">I Love You ❤️</div>
+        <div class="heart-keypad">
 
-<!-- TEDDY -->
-<div id="teddy">
-  <img src="teddy.gif">
-  <div id="missText">I miss you 💖</div>
-</div>
+            <button onclick="enterPin('1')">❤️<span>1</span></button>
+            <button onclick="enterPin('2')">❤️<span>2</span></button>
+            <button onclick="enterPin('3')">❤️<span>3</span></button>
 
-<script>
+            <button onclick="enterPin('4')">❤️<span>4</span></button>
+            <button onclick="enterPin('5')">❤️<span>5</span></button>
+            <button onclick="enterPin('6')">❤️<span>6</span></button>
 
-// PIN
-function checkPin(){
-  let pinInput=document.getElementById("pin");
-  if(pinInput.value=="1234"){
-    changeScreen("gifScreen");
-  }else{
-    pinInput.classList.add("shake");
-    setTimeout(()=>pinInput.classList.remove("shake"),300);
+            <button onclick="enterPin('7')">❤️<span>7</span></button>
+            <button onclick="enterPin('8')">❤️<span>8</span></button>
+            <button onclick="enterPin('9')">❤️<span>9</span></button>
 
-    if(navigator.vibrate){
-      navigator.vibrate([200,100,200]);
-    }
-  }
-}
+            <button class="deleteBtn" onclick="deletePin()">⌫</button>
 
-// SCREEN
-function changeScreen(id){
-  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-}
+            <button onclick="enterPin('0')">❤️<span>0</span></button>
 
-// GIF
-let gifs=["gif1.gif","gif2.gif","gif3.gif"];
-let gifIndex=0;
+            <button class="clearBtn" onclick="clearPin()">C</button>
 
-function nextGif(){
-  gifIndex++;
-  if(gifIndex<gifs.length){
-    document.getElementById("gifImage").src=gifs[gifIndex];
-  }else{
-    startSlideshow();
-  }
-}
+        </div>
 
-// SLIDES
-let slides=[
-  {type:"img",src:"1.jpg"},
-  {type:"img",src:"2.jpg"},
-  {type:"video",src:"v1.mp4"},
-  {type:"img",src:"3.jpg"},
-  {type:"video",src:"v2.mp4"},
-  {type:"img",src:"4.jpg"}
-];
+    </div>
 
-function startSlideshow(){
-  changeScreen("slideScreen");
-  let i=0;
+</section>
 
-  function show(){
-    let s=slides[i];
-    let c=document.getElementById("slideshow");
+<!-- ========================= -->
+<!-- STORY SCREEN -->
+<!-- ========================= -->
+<section id="storyScreen" class="screen">
 
-    if(s.type=="img"){
-      c.innerHTML=`<img class="fade" src="${s.src}">`;
-      setTimeout(next,1500);
-    }else{
-      c.innerHTML=`<video class="fade" src="${s.src}" autoplay></video>`;
-      c.querySelector("video").onended=next;
-    }
-  }
+    <img id="storyImage" src="assets/story1.jpg">
 
-  function next(){
-    i++;
-    if(i<slides.length) show();
-    else changeScreen("giftScreen");
-  }
+    <div id="storyPopup" class="storyPopup">
+        Blow The Candles ✨🕯️
+    </div>
 
-  show();
-}
+</section>
 
-// GIFTS
-function openGift(n){
-  changeScreen("giftContent");
-  let d=document.getElementById("giftData");
+<!-- ========================= -->
+<!-- SLIDESHOW SCREEN -->
+<!-- ========================= -->
+<section id="slideshowScreen" class="screen">
 
-  if(n==1) d.innerHTML="<img class='fadeIn' src='g1.jpg'>";
-  if(n==2) d.innerHTML="<video class='fadeIn' src='g2.mp4' controls></video>";
-  if(n==3) d.innerHTML="<img class='fadeIn' src='g3.jpg'>";
-}
+    <div class="slideshow-card">
 
-function backToGifts(){
-  changeScreen("giftScreen");
-}
+        <img id="slideImage">
 
-function nextPage(){
-  changeScreen("letterScreen");
-  typeText();
-}
+        <video id="slideVideo" controls></video>
 
-// LETTER
-function typeText(){
-  let text="Happy Birthday ❤️ You are my everything...";
-  let i=0;
-  let el=document.getElementById("letterText");
+    </div>
 
-  let int=setInterval(()=>{
-    el.innerHTML+=text[i];
-    i++;
-    if(i>=text.length) clearInterval(int);
-  },50);
-}
+</section>
 
-// POPUP + TEDDY
-function showPopup(){
-  let p=document.getElementById("popup");
-  p.style.display="block";
-  p.style.top="40%";
-  p.style.left="50%";
-  p.style.transform="translateX(-50%)";
+<!-- ========================= -->
+<!-- GIFTS SCREEN -->
+<!-- ========================= -->
+<section id="giftScreen" class="screen">
 
-  // hearts
-  for(let i=0;i<20;i++){
-    let h=document.createElement("div");
-    h.className="heart";
-    h.innerHTML="❤️";
-    h.style.left=Math.random()*100+"%";
-    document.body.appendChild(h);
-  }
+    <h2>Choose A Gift 🎁</h2>
 
-  // teddy after 1 sec
-  setTimeout(()=>{
-    document.getElementById("teddy").classList.add("teddyShow");
-    document.getElementById("missText").style.display="block";
-  },1000);
-}
+    <div class="gift-container">
 
-</script>
+        <div class="gift-box" onclick="openGift(1)">
+            🎁
+        </div>
+
+        <div class="gift-box" onclick="openGift(2)">
+            🎁
+        </div>
+
+        <div class="gift-box" onclick="openGift(3)">
+            🎁
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ========================= -->
+<!-- GIFT CONTENT SCREEN -->
+<!-- ========================= -->
+<section id="giftContentScreen" class="screen">
+
+    <div id="giftData"></div>
+
+    <button class="backBtn" onclick="backToGifts()">
+        ⬅ Back
+    </button>
+
+</section>
+
+<!-- ========================= -->
+<!-- LETTER SCREEN -->
+<!-- ========================= -->
+<section id="letterScreen" class="screen">
+
+    <div class="letterCard">
+
+        <h2>💌 Letter For Keenoo</h2>
+
+        <div id="letterText"></div>
+
+    </div>
+
+    <button class="nextArrow" onclick="goNextPage()">
+        ➡️
+    </button>
+
+</section>
+
+<script src="script.js"></script>
 
 </body>
 </html>
