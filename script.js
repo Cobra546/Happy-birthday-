@@ -1009,7 +1009,7 @@ function startTypewriter(){
 function goNextPage(){
 
     window.location.href =
-    "page2.html";
+    "https://cobra546.github.io/Book/";
 
 }
 
