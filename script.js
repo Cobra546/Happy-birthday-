@@ -258,7 +258,7 @@ const slides = [
 
 {
     type:"video",
-    src:"assets/slide6.mp4"
+    src:"assets/slide6.jpg"
 },
 
 {
@@ -367,30 +367,27 @@ function loadSlide(){
 
     // VIDEO
 
-    if(
-        item.type === "video"
-    ){
+    if (item.type === "video") {
 
-        video.src =
-        item.src;
+    video.src = item.src;
 
-        video.style.display =
-        "block";
+    video.style.display = "block";
 
-        video.currentTime = 0;
+    video.currentTime = 0;
 
-        video.play();
+    video.play();
 
-        video.onended =
-        function(){
+    clearTimeout(window.videoTimer);
 
-            nextSlide();
+    window.videoTimer = setTimeout(() => {
 
-        };
+        video.pause();
+
+        nextSlide();
+
+    }, 3000);
 
     }
-
-}
 
 // =========================
 // NEXT SLIDE
