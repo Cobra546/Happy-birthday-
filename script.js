@@ -232,7 +232,7 @@ function(e){
 const slides = [
 
 {
-    type:"image",
+    type:"VID_20260601_063646_653.mp4",
     src:"assets/slide1.mp4"
 },
 
@@ -242,7 +242,7 @@ const slides = [
 },
 
 {
-    type:"video",
+    type:"VID_20260601_064829_653.mp4",
     src:"assets/slide3.mp4"
 },
 
@@ -252,7 +252,7 @@ const slides = [
 },
 
 {
-    type:"image",
+    type:"VID_20260601_074532_975.mp4",
     src:"assets/slide5.mp4"
 },
 
@@ -262,7 +262,7 @@ const slides = [
 },
 
 {
-    type:"image",
+    type:"VID_20260601_074542_592.mp4",
     src:"assets/slide7.mp4"
 },
 
@@ -277,7 +277,7 @@ const slides = [
 },
 
 {
-    type:"video",
+    type:"VID_20260601_074547_747.mp4",
     src:"assets/slide10.mp4"
 },
 
