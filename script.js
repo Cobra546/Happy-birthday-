@@ -233,7 +233,7 @@ const slides = [
 
 {
     type:"image",
-    src:"assets/slide1.jpg"
+    src:"assets/slide1.mp4"
 },
 
 {
@@ -253,7 +253,7 @@ const slides = [
 
 {
     type:"image",
-    src:"assets/slide5.jpg"
+    src:"assets/slide5.mp4"
 },
 
 {
@@ -263,7 +263,7 @@ const slides = [
 
 {
     type:"image",
-    src:"assets/slide7.jpg"
+    src:"assets/slide7.mp4"
 },
 
 {
