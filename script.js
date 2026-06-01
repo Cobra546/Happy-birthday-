@@ -1,4 +1,11 @@
 // =========================
+// GIFT PROGRESS
+// =========================
+
+let quizCompleted = false;
+let surveyCompleted = false;
+let gameCompleted = false;
+// =========================
 // SCREEN SWITCHER
 // =========================
 
@@ -571,7 +578,15 @@ function answerQuiz(index){
         loadQuiz();
 
     }else{
+quizCompleted = true;
 
+document
+.querySelectorAll(
+".gift-box"
+)[0]
+.innerHTML = "✔️";
+
+checkAllGifts();
         document
         .getElementById(
         "giftData"
@@ -594,6 +609,15 @@ function answerQuiz(index){
 // SURVEY
 // =========================
 
+surveyCompleted = true;
+
+document
+.querySelectorAll(
+".gift-box"
+)[1]
+.innerHTML = "✔️";
+
+checkAllGifts();
 const surveyQuestions = [
 
 "What's something you wish I would quit doing? 💜",
@@ -866,8 +890,18 @@ function finishGame(){
 
     `;
 
+    
     if(score >= 10){
+gameCompleted = true;
 
+document
+.querySelectorAll(
+".gift-box"
+)[2]
+.innerHTML = "✔️";
+
+checkAllGifts();
+        
         html += `
         <button
         onclick="showLetter()">
@@ -1030,5 +1064,28 @@ window.onload = function(){
     line-height:1.9;
 
     text-align:left;
+
+}
+
+// =========================
+// CHECK ALL GIFTS
+// =========================
+
+function checkAllGifts(){
+
+    if(
+        quizCompleted &&
+        surveyCompleted &&
+        gameCompleted
+    ){
+
+        document
+        .getElementById(
+        "continueBtn"
+        )
+        .style.display =
+        "block";
+
+    }
 
 }
