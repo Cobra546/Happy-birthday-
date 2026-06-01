@@ -237,7 +237,7 @@ const slides = [
 },
 
 {
-    type:"image",
+    type:"Snapchat-1743314209.jpg",
     src:"assets/slide2.jpg"
 },
 
@@ -247,7 +247,7 @@ const slides = [
 },
 
 {
-    type:"image",
+    type:"Snapchat-1667479255.jpg",
     src:"assets/slide4.jpg"
 },
 
@@ -257,7 +257,7 @@ const slides = [
 },
 
 {
-    type:"video",
+    type:"Snapchat-1308820083.jpg",
     src:"assets/slide6.jpg"
 },
 
@@ -267,12 +267,12 @@ const slides = [
 },
 
 {
-    type:"image",
+    type:"Snapchat-1094199920.jpg",
     src:"assets/slide8.jpg"
 },
 
 {
-    type:"image",
+    type:"Snapchat-1056806331.jpg",
     src:"assets/slide9.jpg"
 },
 
