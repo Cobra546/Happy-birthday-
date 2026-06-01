@@ -125,17 +125,17 @@ function checkPin(){
 const storyData = [
 
 {
-    image:"assets/story1.jpg",
+    image:"Fashion Magazine in Mint Green Green Black and White Minimal Type-Driven St_20260601_200220_0000.png",
     text:"Blow The Candles ✨🕯️"
 },
 
 {
-    image:"assets/story2.jpg",
+    image:"lv_0_20260601195641.png",
     text:"Cut The Cake 🎂🔪"
 },
 
 {
-    image:"assets/story3.jpg",
+    image:"lv_0_20260601194959.png",
     text:"One For You ❤️<br>And One For Me 🥰"
 }
 
